@@ -1,0 +1,389 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NoMansSkyRecipies</name>
+    </assembly>
+    <members>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.CraftedItemsController._recipesRepository">
+            <summary>
+            repository for Recipes
+            </summary>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.CraftedItemsController._resourceRepository">
+            <summary>
+            repository for Resources
+            </summary>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.CraftedItemsController._craftedItemsRepository">
+            <summary>
+            repository for CraftedItems
+            </summary>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.CraftedItemsController.#ctor(NmsRecipes.DAL.Interfaces.ICraftedItemsRepository,NmsRecipes.DAL.Interfaces.IRecipeRepository,NmsRecipes.DAL.Interfaces.IResourceRepository)">
+            <summary>
+            constructor
+            </summary>
+            <param name="recipeRepository">repository for Recipes</param>
+            <param name="resourceRepository">repository for Resources</param>
+            <param name="craftedItemsRepository">repository for CraftedItems</param>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.CraftedItemsController.GetCraftableItems">
+            <summary>
+            Get list of all existing CraftableItems
+            </summary>
+            <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.CraftedItemsController.GetCraftableItemWithFullRecipie(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Gets the list of low-tier resources needed for crafting SINGLE CraftableItem
+            </summary>
+            <param name="itemName">name of required item</param>
+            <param name="count">number of required items</param>
+            <returns>Ok if requested item exists, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.CraftedItemsController.GetCraftableItemWithMutipliedRecipie(System.String,System.Int32)">
+            <summary>
+            returns CraftableItem with list of low-tier resources needed for crafting multiplied for requested number of items
+            </summary>
+            <param name="itemName">name of required item</param>
+            <param name="count">number of required items</param>
+            <returns>Ok if requested item exists, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.CraftedItemsController.DeleteCraftableItem(System.Int32)">
+            <summary>
+            Delete CraftableItem with specified Name
+            </summary>
+            <param name="id">id of the CraftableItem to delete</param>
+            <returns>Ok if item was deleted successfully,
+            NoContent if item was not found,
+            BadRequest if ModelState is invalid or exception has been thrown while deleting the item</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.CraftedItemsController.AddNewCraftableItem(NmsRecipes.DAL.Model.CraftableItemModel)">
+            <summary>
+            Adds new CraftableItem 
+            </summary>
+            <param name="model">CraftableItemModel with data for new CraftableItem to add</param>
+            <returns>Ok if item was added successfully,
+            BadRequest if ModelState is invalid or exception has been thrown while adding the item
+            </returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.CraftedItemsController.UpdatedCraftableItem(System.Int32,NmsRecipes.DAL.Model.CraftableItemModel)">
+            <summary>
+            Updates new CraftableItem 
+            </summary>
+            <param name="model">CraftableItemModel with data for new CraftableItem to update</param>
+            <param name="id">Id of CraftableItem to update</param>
+            <returns>Ok if item was added successfully,
+            BadRequest if ModelState is invalid or exception has been thrown while adding the item
+            </returns>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.RecipesController._recipeRepository">
+            <summary>
+            repository for Recipes
+            </summary>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.RecipesController._resourceRepository">
+            <summary>
+            repository for Resources
+            </summary>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.RecipesController._craftedItemsRepository">
+            <summary>
+            repository for CraftedItems
+            </summary>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.RecipesController.#ctor(NmsRecipes.DAL.Interfaces.IRecipeRepository,NmsRecipes.DAL.Interfaces.IResourceRepository,NmsRecipes.DAL.Interfaces.ICraftedItemsRepository)">
+            <summary>
+            constructor
+            </summary>
+            <param name="recipeRepository">repository for Recipes</param>
+            <param name="resourceRepository">repository for Resources</param>
+            <param name="craftedItemsRepository">repository for CraftedItems</param>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.RecipesController.GetAllRecipes">
+            <summary>
+            Gets all existing Recipes
+            </summary>
+            <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.RecipesController.GetSingleItemRecipe(System.String)">
+            <summary>
+             Gets Recipe for single CraftableItem with specified name
+            </summary>
+            <param name="itemName">name of CraftableItem to get recipe for</param>
+            <returns>Ok if CraftableItem was found, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.RecipesController.AddNewRecipe(NmsRecipes.DAL.Model.RecipeModel)">
+            <summary>
+            Adds new Recipie to specified CraftableItem
+            </summary>
+            <param name="model">RecipeAddModel containing data for new Recipie</param>
+            <returns>Created if Recipe was added successfully, otherwise - BadRequest with errors</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.RecipesController.UpdateItem(System.Int32,NmsRecipes.DAL.Model.RecipeModel)">
+            <summary>
+            updates Recipe with new values from RecipeUpdateModel
+            </summary>
+            <param name="id">Id</param>
+            <param name="model">model with new data for resource</param>
+            <returns> OK if model is valid and Resource was updated successfully,
+            BadRequest if model contains bad data
+            500 if exception has been thrown while saving new resource
+            </returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.RecipesController.DeleteItem(System.Int32)">
+            <summary>
+            deletes Recipe with specified Id
+            </summary>
+            <param name="id">id of the recipe to delete</param>
+            <returns>
+            Ok if Recipe exist and was deleted successfully
+            NotFound if recipe does not exist
+            BadRequest if exception has been thrown during recipe deleting
+            </returns>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.ResourcesController._resourceRepository">
+            <summary>
+            repository for Resources
+            </summary>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v1.ResourcesController._recipeRepository">
+            <summary>
+            repository for Recipes
+            </summary>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.#ctor(NmsRecipes.DAL.Interfaces.IResourceRepository,NmsRecipes.DAL.Interfaces.IRecipeRepository,MediatR.IMediator)">
+            <summary>
+            constructor
+            </summary>
+            <param name="recipeRepository">repository for Recipes</param>
+            <param name="resourceRepository">repository for Resources</param>
+            <param name="mediator">mediator</param>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.GetResources">
+            <summary>
+            Get list of all existing Resources
+            </summary>
+            <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.GetAllResources">
+            <summary>
+            Get list of all existing Resources
+            </summary>
+            <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.GetResourceById(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns>Ok if result, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.GetResourceById_new(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns>Ok if result, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.GetSimplifiedResources">
+            <summary>
+            Get list of all existing Resources names
+            </summary>
+            <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.GetResourcesByCategory(System.String)">
+            <summary>
+            Gets all Resources which belongs to specified category
+            </summary>
+            <param name="resourceCategory">resources category to match with</param>
+            <returns>Ok if resourceCategory is valid and resulting collection is not empty
+            NoContent if resourceCategory is valid but resulting collection is empty
+            otherwise BadRequest</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.UsedInRecipies(System.String)">
+            <summary>
+            Gets list of all CraftableItems where specified resource is used in
+            </summary>
+            <param name="resourceName">name of resource</param>
+            <returns>Ok if specified resource exist and resulting collection is not empty
+            NoContent if specified resource exist but resulting collection is empty
+            NotFound if specified resource does not exist</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.UsedInRecipies(System.Int32)">
+            <summary>
+            Gets list of all CraftableItems where specified resource is used in
+            </summary>
+            <param name="resourceId">id of resource</param>
+            <returns>Ok if specified resource exist and resulting collection is not empty
+            NoContent if specified resource exist but resulting collection is empty
+            NotFound if specified resource does not exist</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.AddResource(NmsRecipes.DAL.Model.RawResourceModel)">
+            <summary>
+            Adds new Resource
+            </summary>
+            <param name="model">RawResourceModel with data for new Resource</param>
+            <returns> OK if model is valid and Resource was added successfully,
+            BadRequest if model contains bad data
+            500 if exception has been thrown while saving new resource
+            </returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.DeleteItem(System.Int32)">
+            <summary>
+            Delete Resource with specified name
+            </summary>
+            <param name="id">id of resource to delete</param>
+            <returns>
+            OK if resource exist and was deleted successfully,
+            NotFound if resource does not exist
+            Status500 if exception has been thrown while deleting new resource
+            </returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v1.ResourcesController.UpdateItem(System.Int32,NmsRecipes.DAL.Model.RawResourceModel)">
+            <summary>
+            updates Resource with new values from RawResourceModel
+            </summary>
+            <param name="model">model with new data for resource</param>
+            <param name="id">id</param>
+            <returns> OK if model is valid and Resource was updated successfully,
+            BadRequest if model contains bad data
+            500 if exception has been thrown while saving new resource
+            </returns>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v3.ResourcesController._resourceRepository">
+            <summary>
+            repository for Resources
+            </summary>
+        </member>
+        <member name="F:NoMansSkyRecipies.Controllers.v3.ResourcesController._recipeRepository">
+            <summary>
+            repository for Recipes
+            </summary>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.#ctor(NmsRecipes.DAL.Interfaces.IResourceRepository,NmsRecipes.DAL.Interfaces.IRecipeRepository,MediatR.IMediator,Microsoft.AspNetCore.Routing.LinkGenerator)">
+            <summary>
+            constructor
+            </summary>
+            <param name="recipeRepository">repository for Recipes</param>
+            <param name="resourceRepository">repository for Resources</param>
+            <param name="mediator">mediator</param>
+            <param name="linkGenerator">Link generator</param>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.GetAllResources">
+            <summary>
+            Get list of all existing Resources
+            </summary>
+            <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.GetResourceById(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns>Ok if result, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.GetSimplifiedResources">
+            <summary>
+            Get list of all existing Resources names
+            </summary>
+            <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.GetResourcesByCategory(System.String)">
+            <summary>
+            Gets all Resources which belongs to specified category
+            </summary>
+            <param name="resourceCategory">resources category to match with</param>
+            <returns>Ok if resourceCategory is valid and resulting collection is not empty
+            NoContent if resourceCategory is valid but resulting collection is empty
+            otherwise BadRequest</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.UsedInRecipies(System.String)">
+            <summary>
+            Gets list of all CraftableItems where specified resource is used in
+            </summary>
+            <param name="resourceName">name of resource</param>
+            <returns>Ok if specified resource exist and resulting collection is not empty
+            NoContent if specified resource exist but resulting collection is empty
+            NotFound if specified resource does not exist</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.UsedInRecipies(System.Int32)">
+            <summary>
+            Gets list of all CraftableItems where specified resource is used in
+            </summary>
+            <param name="resourceId">id of resource</param>
+            <returns>Ok if specified resource exist and resulting collection is not empty
+            NoContent if specified resource exist but resulting collection is empty
+            NotFound if specified resource does not exist</returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.AddResource(NmsRecipes.DAL.Model.RawResourceModel,Microsoft.AspNetCore.Mvc.ApiVersion)">
+            <summary>
+            Adds new Resource
+            </summary>
+            <param name="model">RawResourceModel with data for new Resource</param>
+            <param name="apiVersion">Version of API</param>
+            <returns> OK if model is valid and Resource was added successfully,
+            BadRequest if model contains bad data
+            500 if exception has been thrown while saving new resource
+            </returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.DeleteItem(System.Int32)">
+            <summary>
+            Delete Resource with specified name
+            </summary>
+            <param name="id">id of resource to delete</param>
+            <returns>
+            OK if resource exist and was deleted successfully,
+            NotFound if resource does not exist
+            Status500 if exception has been thrown while deleting new resource
+            </returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Controllers.v3.ResourcesController.UpdateItem(System.Int32,NmsRecipes.DAL.Model.RawResourceModel)">
+            <summary>
+            updates Resource with new values from RawResourceModel
+            </summary>
+            <param name="model">model with new data for resource</param>
+            <param name="id">id</param>
+            <returns> OK if model is valid and Resource was updated successfully,
+            BadRequest if model contains bad data
+            500 if exception has been thrown while saving new resource
+            </returns>
+        </member>
+        <member name="M:NoMansSkyRecipies.Helpers.HashCalculator.GetHashSha256(System.String)">
+            <summary>
+            calculates SHA256 hash of raw string
+            </summary>
+            <param name="input">String to calculate hash from</param>
+            <returns>SHA256 hash</returns>
+        </member>
+        <member name="T:NoMansSkyRecipies.Resources.DisplayNames">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:NoMansSkyRecipies.Resources.DisplayNames.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:NoMansSkyRecipies.Resources.DisplayNames.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:NoMansSkyRecipies.Resources.ErrorMessages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:NoMansSkyRecipies.Resources.ErrorMessages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:NoMansSkyRecipies.Resources.ErrorMessages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>
