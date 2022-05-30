@@ -38,7 +38,7 @@ namespace NoMansSkyRecipies.CQRS.Handlers
             if (newId != 0)
             {
                 result = this._resourceRepository.GetItemById(newId)?.MapToDisplayedResource();
-            }file:///C:/Program%20Files%20(x86)/ACD%20Systems/ACDSee/8.0.Pro/QuickStart/browse.html
+            }
 
             return (newId, result);
         }
