@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -17,11 +18,12 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Routing;
 using NoMansSkyRecipies.CQRS.Commands;
 using NoMansSkyRecipies.CQRS.Queries;
+using WeaponSystemCaller;
 
 namespace NoMansSkyRecipies.Controllers.v3
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("3.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ResourcesController : BaseController
     {
         /// <summary>
@@ -37,23 +39,27 @@ namespace NoMansSkyRecipies.Controllers.v3
         private readonly IMediator _mediator;
 
         private readonly LinkGenerator _linkGenerator;
+        private readonly IServiceProvider _serviceProvider;
 
         /// <summary>
         /// constructor
         /// </summary>
-        /// <param name="recipeRepository">repository for Recipes</param>
         /// <param name="resourceRepository">repository for Resources</param>
+        /// <param name="recipeRepository">repository for Recipes</param>
         /// <param name="mediator">mediator</param>
         /// <param name="linkGenerator">Link generator</param>
         public ResourcesController(IResourceRepository resourceRepository,
             IRecipeRepository recipeRepository,
-            IMediator mediator, LinkGenerator linkGenerator
+            IMediator mediator, 
+            LinkGenerator linkGenerator,
+            IServiceProvider serviceProvider
             )
         {
             this._resourceRepository = resourceRepository;
             this._recipeRepository = recipeRepository;
             this._mediator = mediator;
             this._linkGenerator = linkGenerator;
+            this._serviceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -327,6 +333,28 @@ namespace NoMansSkyRecipies.Controllers.v3
             return result;
         }
 
+        [HttpGet("WithAnotherApiCall")]
+        public async Task<IActionResult> TestMoreTraces()
+        {
+            var service = this._serviceProvider.GetService(typeof(IWeaponSystemCallerService)) as WeaponSystemCallerService;
+
+            var res = await service.CallForWeapons();
+
+            if (!string.IsNullOrWhiteSpace(res))
+            {
+                return Ok(res);
+            }
+
+            return BadRequest("No dice!");
+        }
+
+        /// <summary>
+        /// Returns list of links for actions on an object with specified Id for a specific API version
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="apiVersion"></param>
+        /// <returns></returns>
+        [NonAction]
         public override List<ResourceUri> GetResourceUris(int id, ApiVersion apiVersion)
         {
             return new List<ResourceUri>

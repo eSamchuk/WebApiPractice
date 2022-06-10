@@ -18,6 +18,22 @@ namespace NoMansSkyRecipies.Configuration
             services.AddSingleton(jwtSettings);
             services.AddScoped<IAuthService, AuthService>();
             services.AddSingleton(Log.Logger);
+
+            ////DI with Scrutor - bruh
+            //services.Scan(scan => 
+            //    scan.FromAssemblyOf<Startup>()
+            //    .AddClasses(c => c.AssignableTo<IAuthService>())
+            //    .AsImplementedInterfaces()
+            //    .WithScopedLifetime()
+
+            //    .AddClasses(c => c.AssignableTo<ILogger>())
+            //    .AsImplementedInterfaces()
+            //    .WithSingletonLifetime()
+
+            //    .AddClasses(c => c.AssignableTo<IConfigureOptions<SwaggerGenOptions>>())
+            //    .AsImplementedInterfaces()
+            //    .WithTransientLifetime()
+            //);
         }
     }
 }

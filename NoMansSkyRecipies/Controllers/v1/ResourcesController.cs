@@ -7,10 +7,15 @@ using NmsRecipes.DAL.Model;
 using NoMansSkyRecipies.Data.Entities;
 using NoMansSkyRecipies.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using NoMansSkyRecipies.CQRS.Queries;
 
 namespace NoMansSkyRecipies.Controllers.v1
@@ -21,6 +26,11 @@ namespace NoMansSkyRecipies.Controllers.v1
     public class ResourcesController : ControllerBase
     {
         /// <summary>
+        /// distibuted cache
+        /// </summary>
+        private readonly IDistributedCache _distributedCache;
+
+        /// <summary>
         /// repository for Resources
         /// </summary>
         private readonly IResourceRepository _resourceRepository;
@@ -30,9 +40,10 @@ namespace NoMansSkyRecipies.Controllers.v1
         /// </summary>
         private readonly IRecipeRepository _recipeRepository;
 
+        /// <summary>
+        /// mediator
+        /// </summary>
         private readonly IMediator _mediator;
-
-        //private IMemoryCache _cache;
 
         /// <summary>
         /// constructor
@@ -40,16 +51,16 @@ namespace NoMansSkyRecipies.Controllers.v1
         /// <param name="recipeRepository">repository for Recipes</param>
         /// <param name="resourceRepository">repository for Resources</param>
         /// <param name="mediator">mediator</param>
+        /// <param name="distributedCache">distibuted cache</param>
         //IMemoryCache cache
         public ResourcesController(IResourceRepository resourceRepository,
             IRecipeRepository recipeRepository,
-            IMediator mediator
-            )
+            IMediator mediator, IDistributedCache distributedCache)
         {
             this._resourceRepository = resourceRepository;
             this._recipeRepository = recipeRepository;
             this._mediator = mediator;
-            //this._cache = cache;
+            this._distributedCache = distributedCache;
         }
 
         /// <summary>
@@ -81,6 +92,41 @@ namespace NoMansSkyRecipies.Controllers.v1
         {
             var query = new GetResourcesQuery();
             var resources = await this._mediator.Send(query);
+
+            return resources.Any() ? (ActionResult)Ok(resources) : NoContent();
+        }
+
+        /// <summary>
+        /// Get list of all existing Resources
+        /// </summary>
+        /// <returns>Ok if resulting collection is not empty, otherwise - NoContent</returns>
+        [HttpGet("All/WithCache")]
+        [ApiConventionMethod(typeof(DefaultApiConventions), nameof(DefaultApiConventions.Get))]
+        public async Task<ActionResult> GetAllResourcesWithCache()
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            var query = new GetResourcesQuery();
+            List<DisplayedResource> resources = null;
+
+            var cacheKey = "all";
+            var resFromCahce = await this._distributedCache.GetAsync(cacheKey);
+
+            if (resFromCahce != null)
+            {
+                resources = JsonConvert.DeserializeObject<List<DisplayedResource>>(Encoding.UTF8.GetString(resFromCahce));
+            }
+            else
+            {
+                resources = await this._mediator.Send(query);
+
+                await this._distributedCache.SetAsync(cacheKey, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(resources)));
+            }
+
+            sw.Stop();
+            Activity.Current.SetTag("Duration", sw.ElapsedMilliseconds);
+
             return resources.Any() ? (ActionResult)Ok(resources) : NoContent();
         }
 

@@ -33,7 +33,7 @@ namespace NoMansSkyRecipies.Configuration
                 });
 
                 x.ResolveConflictingActions(descriptions => descriptions.First());
-                x.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "ApiDoc.xml"));
+                x.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "ApiDoc.xml"), true);
                 x.OperationFilter<SwaggerLocalizationHeader>();
             });
 

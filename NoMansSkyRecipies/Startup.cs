@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,7 +14,6 @@ using NoMansSkyRecipies.CQRS.PipelineBehaviors;
 using NoMansSkyRecipies.CustomSettings;
 using NoMansSkyRecipies.Middleware;
 using Serilog;
-using IApplicationLifetime = Microsoft.Extensions.Hosting.IApplicationLifetime;
 
 namespace NoMansSkyRecipies
 {
@@ -31,8 +31,36 @@ namespace NoMansSkyRecipies
             var jwtSettings = new JwtSettings();
             this.Configuration.Bind(nameof(JwtSettings), jwtSettings);
 
-            
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+
+            services.Configure<IISOptions>(options =>
+            {
+                options.ForwardClientCertificate = false;
+            });
+
+            services.ConfigureHttpClients(this.Configuration);
+
             services.AddVersionedApiExplorer();
+
+            services.Configure<KestrelServerOptions>(opt =>
+            {
+                opt.AllowSynchronousIO = true;
+            });
+
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = this.Configuration["Rediscache:endpoint"];
+            });
+
+            ////App.Metrics
+            services.AddMetrics();
+
+
+            services.ConfigureTracingAndMetrics();
 
             services.ConfigureInstances(jwtSettings);
 
@@ -41,7 +69,9 @@ namespace NoMansSkyRecipies
             services.AddRouting();
 
             services.AddMediatR(typeof(Startup));
+
             services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
+
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             services.ConfigureRepositories();
@@ -64,14 +94,13 @@ namespace NoMansSkyRecipies
             services.ConfigureAuthentication(jwtSettings);
 
             ////ÁÄ
-            services.ConfigureDbContext(jwtSettings, this.Configuration);
+            services.ConfigureDbContext(this.Configuration);
 
             ////Âåðñ³¿
             services.ConfigureVersions();
 
             ////swagger
             services.ConfigureSwagger();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

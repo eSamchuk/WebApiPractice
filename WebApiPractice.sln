@@ -23,7 +23,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "ConsoleTest\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsersData", "UsersData\UsersData.csproj", "{BAC0B099-0B91-4CAD-AAD2-24FCB989F4F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nms.Mappings", "Nms.Mappings\Nms.Mappings.csproj", "{D57554C9-0B5B-4F10-84CE-A04E24E0C8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nms.Mappings", "Nms.Mappings\Nms.Mappings.csproj", "{D57554C9-0B5B-4F10-84CE-A04E24E0C8BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SomeOtherAPI", "SomeOtherAPI", "{3F4C8A9D-C07E-4464-959B-4E44645623CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeaponSystemsAPI", "WeaponSystemsAPI\WeaponSystemsAPI.csproj", "{62E4F662-BB91-49E3-BB64-7E3B1FB5946F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{E291FBA7-1BF8-4185-A596-D4F86FA8A3C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeaponSystemCaller", "WeaponSystemCallerService\WeaponSystemCaller.csproj", "{ED6DEFF8-4B35-4855-A362-229C29232F2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K6", "K6", "{E61A306A-E475-4123-8F0B-043D54FA723C}"
+	ProjectSection(SolutionItems) = preProject
+		K6\load-test-cache.js = K6\load-test-cache.js
+		K6\load-test.js = K6\load-test.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +81,14 @@ Global
 		{D57554C9-0B5B-4F10-84CE-A04E24E0C8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D57554C9-0B5B-4F10-84CE-A04E24E0C8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D57554C9-0B5B-4F10-84CE-A04E24E0C8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62E4F662-BB91-49E3-BB64-7E3B1FB5946F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E4F662-BB91-49E3-BB64-7E3B1FB5946F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62E4F662-BB91-49E3-BB64-7E3B1FB5946F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E4F662-BB91-49E3-BB64-7E3B1FB5946F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED6DEFF8-4B35-4855-A362-229C29232F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED6DEFF8-4B35-4855-A362-229C29232F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED6DEFF8-4B35-4855-A362-229C29232F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED6DEFF8-4B35-4855-A362-229C29232F2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +104,8 @@ Global
 		{BDDB8568-889C-4ECF-9A4F-C272B804F240} = {E1968FC6-7375-49CE-B446-8FCE1164311E}
 		{BAC0B099-0B91-4CAD-AAD2-24FCB989F4F3} = {B1E03EAB-C493-4C5E-8B5D-1F849C20704C}
 		{D57554C9-0B5B-4F10-84CE-A04E24E0C8BE} = {B1E03EAB-C493-4C5E-8B5D-1F849C20704C}
+		{62E4F662-BB91-49E3-BB64-7E3B1FB5946F} = {3F4C8A9D-C07E-4464-959B-4E44645623CD}
+		{ED6DEFF8-4B35-4855-A362-229C29232F2F} = {E291FBA7-1BF8-4185-A596-D4F86FA8A3C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC869FC4-32C3-4B01-A6C3-335B8E35E1E5}

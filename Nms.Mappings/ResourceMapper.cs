@@ -13,6 +13,7 @@ namespace Nms.Mappings
             {
                 result = new DisplayedResource()
                 {
+                    Id = resource.Id,
                     ResourceName = resource.Name,
                     ResourceTypeName = resource.RawResourceType?.ResourceTypeName,
                     Value = resource.Value

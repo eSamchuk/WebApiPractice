@@ -37,7 +37,6 @@ namespace NoMansSkyRecipies.Middleware
                         .SupportedCultures?.Select(c => new OpenApiString(c.TwoLetterISOLanguageName)).ToList<IOpenApiAny>(),
                 }
             });
-
         }
     }
 }

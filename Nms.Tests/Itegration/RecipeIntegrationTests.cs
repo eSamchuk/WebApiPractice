@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using NmsDisplayData;
 using NmsRecipes.DAL.Model;
@@ -111,7 +110,6 @@ namespace Nms.Tests.Itegration
             Assert.That(content.NeededResources.Count == model.NeededResources.Count);
 
         }
-
 
         [Test]
         public async Task Delete_Valid_Recipe()

@@ -9,8 +9,7 @@ namespace NoMansSkyRecipies.Configuration
 {
     public static class DbContextConfiguration
     {
-        public static void ConfigureDbContext(this IServiceCollection services, JwtSettings jwtSettings,
-            IConfiguration configuration)
+        public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<UserDataDbContext>(x =>
                 x.UseSqlServer(configuration.GetConnectionString("AuthData")), ServiceLifetime.Transient);

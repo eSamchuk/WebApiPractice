@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using App.Metrics.AspNetCore;
+using App.Metrics.Formatters.Prometheus;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -65,11 +67,23 @@ namespace NoMansSkyRecipies
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
+                .UseMetricsWebTracking()
+                .UseMetrics(opt =>
+                {
+                    opt.EndpointOptions = endpointOPtions =>
+                    {
+                        endpointOPtions.MetricsTextEndpointOutputFormatter = new MetricsPrometheusTextOutputFormatter();
+                        endpointOPtions.MetricsOutputFormatters =
+                            new[] { new MetricsPrometheusProtobufOutputFormatter() };
+                        endpointOPtions.EnvironmentInfoEndpointEnabled = false;
+                    };
+                })
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>().UseIISIntegration(); })
-            .UseSerilog(
+                .UseSerilog(
                 (context, configuration) =>
                 {
                     configuration.ReadFrom.Configuration(context.Configuration);
+                    configuration.Enrich.FromLogContext().Enrich.WithMachineName();
                 });
         }
     }
